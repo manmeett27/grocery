@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery - Fresh Fruits And Vegetables</title>
+    <style>
+        :root {
+            --green: #cfe8c4;
+            --green-deep: #1f3a3a;
+            --green-soft: #f4f9f0;
+            --text: #1f2d2d;
+            --muted: #6a726f;
+            --white: #ffffff;
+            --orange: #ff7a45;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.5;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-left: -14px;
+        }
+
+        .header-tools {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-left: auto;
+        }
+
+        .profile-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f7f5;
+            border: 1px solid rgba(31, 58, 58, 0.08);
+            border-radius: 999px;
+            padding: 7px 12px 7px 8px;
+            margin-left: 6px;
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--green-deep);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .profile-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .profile-caret {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid var(--text);
+            opacity: 0.8;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--green);
+            border-radius: 999px;
+            padding: 10px 16px;
+            min-width: 240px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .search-box input::placeholder {
+            color: var(--muted);
+        }
+
+        .icon-image {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(17%) sepia(21%) saturate(740%) hue-rotate(125deg) brightness(94%) contrast(90%);
+        }
+
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            background: var(--green-soft);
+        }
+
+        .cart-wrap {
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -4px;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 6px;
+            border-radius: 50%;
+            background: var(--orange);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--green) 0%, #b8dbbe 100%);
+            min-height: calc(100vh - 78px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            right: -120px;
+            bottom: -120px;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 48px 24px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 18px;
+            color: var(--green-deep);
+        }
+
+        .hero-content p {
+            max-width: 520px;
+            margin-bottom: 28px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .cta-btn {
+            border: none;
+            background: var(--green-deep);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.96;
+        }
+
+        .hero-image-card {
+            max-width: 470px;
+            width: 100%;
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 22px;
+            padding: 10px;
+            box-shadow: 0 20px 45px rgba(24, 43, 35, 0.12);
+            overflow: hidden;
+        }
+
+        .hero-image-card img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 18px;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+
+        .hero-image-card:hover img {
+            transform: scale(0.96);
+            filter: saturate(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-tools {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-box {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-image-card {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">Grocery</a>
+
+            <div class="header-tools">
+                <label class="search-box" aria-label="Search products">
+                    <img src="icon/search.svg" alt="Search" class="icon-image">
+                    <input type="text" placeholder="Search">
+                </label>
+
+                <button class="icon-btn" aria-label="Wishlist">
+                    <img src="icon/notification.svg" alt="Wishlist" class="icon-image">
+                </button>
+
+                <div class="cart-wrap">
+                    <button class="icon-btn" aria-label="Shopping cart">
+                        <img src="icon/package.svg" alt="Cart" class="icon-image">
+                    </button>
+                    <span class="cart-badge">3</span>
+                </div>
+
+                <div class="profile-menu" aria-label="Profile menu">
+                    <div class="profile-avatar">A</div>
+                    <span class="profile-name">Alicia</span>
+                    <span class="profile-caret" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Fresh Vegetables<br>Big discount</h1>
+                <p>Get premium organic vegetables and fruits delivered straight from local farms with fresh quality and trusted service.</p>
+                <button class="cta-btn">Order now</button>
+            </div>
+
+            <div class="hero-image-card">
+                <img src="main_home_fruit_image.jpg" alt="Fresh vegetables and fruit">
+            </div>
+        </div>
+    </section>
+</body>
+</html>
