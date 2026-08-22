@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 10203,
+            "driver": "PostgreSQL",
+            "database": "grocery",
+            "name": "postgres",
+            "username": "postgres"
+        }
+    ]
+}

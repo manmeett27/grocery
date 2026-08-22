@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retailer Dashboard</title>
+
+  <style>
+    :root {
+      --bg: #eef4f5;
+      --dashboard: #ffffff;
+      --card: #f8fbfb;
+
+      --primary: #397d80;
+      --primary-dark: #285f62;
+      --primary-light: #dceff0;
+
+      --text: #1e292c;
+      --muted: #69777a;
+
+      --green: #29925b;
+      --red: #df5b5b;
+
+      --border: #d9e4e5;
+
+      --shadow:
+        0 12px 30px rgba(31, 61, 65, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: transparent;
+
+      color: var(--text);
+
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+
+      padding: 0;
+      margin: 0;
+    }
+
+    /* =====================================================
+       MAIN DASHBOARD
+    ===================================================== */
+
+    .dashboard {
+      width: 100%;
+      min-height: 100vh;
+
+      display: grid;
+
+      grid-template-columns:
+        190px
+        minmax(230px, 1fr)
+        minmax(230px, 1fr)
+        90px;
+
+      gap: 18px;
+
+      padding: 28px;
+
+      background: #ffffff;
+
+      border: none;
+
+      border-radius: 0;
+
+      box-shadow: none;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+    .dashboard::before {
+      content: "";
+
+      position: absolute;
+
+      width: 350px;
+      height: 350px;
+
+      right: -180px;
+      top: -180px;
+
+      border-radius: 50%;
+
+      background: rgba(57,125,128,.06);
+    }
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-image {
+      width: 130px;
+      height: 130px;
+
+      border-radius: 50%;
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          #bdeafa 0 60%,
+          #e8f0c9 60%
+        );
+
+      border: 5px solid white;
+
+      box-shadow:
+        0 5px 15px rgba(0,0,0,.15),
+        0 0 0 2px #d6e5e6;
+
+      margin-bottom: 25px;
+    }
+
+    /* cloud */
+
+    .cloud {
+      position: absolute;
+
+      top: 25px;
+      left: 37px;
+
+      width: 48px;
+      height: 18px;
+
+      border-radius: 20px;
+
+      background: white;
+    }
+
+    .cloud::before {
+      content: "";
+
+      position: absolute;
+
+      width: 22px;
+      height: 22px;
+
+      left: 7px;
+      top: -9px;
+
+      border-radius: 50%;
+
+      background: white;
+    }
+
+    .cloud::after {
+      content: "";
+
+      position: absolute;
+
+      width: 18px;
+      height: 18px;
+
+      right: 5px;
+      top: -7px;
+
+      border-radius: 50%;
+
+      background: white;
+    }
+
+    /* hills */
+
+    .hill-one {
+      position: absolute;
+
+      width: 170px;
+      height: 55px;
+
+      left: -18px;
+      bottom: 10px;
+
+      background: #afd356;
+
+      border-radius: 50%;
+
+      transform: rotate(8deg);
+    }
+
+    .hill-two {
+      position: absolute;
+
+      width: 180px;
+      height: 55px;
+
+      left: -20px;
+      bottom: -20px;
+
+      background: #76a900;
+
+      border-radius: 50%;
+
+      transform: rotate(-8deg);
+    }
+
+
+    /* profile information */
+
+    .profile-details {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+    }
+
+    .profile-row {
+      padding: 9px 10px;
+
+      border-radius: 8px;
+
+      background: #f0f5f5;
+
+      border: 1px solid var(--border);
+
+      font-size: 12px;
+
+      text-align: center;
+    }
+
+    .profile-row strong {
+      display: block;
+
+      color: var(--primary-dark);
+
+      font-size: 11px;
+
+      margin-bottom: 2px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .4px;
+    }
+
+
+    /* =====================================================
+       STAT CARDS
+    ===================================================== */
+
+    .stat-card {
+      min-height: 260px;
+
+      padding: 20px 18px;
+
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #f1f7f7
+        );
+
+      border: 1px solid var(--border);
+
+      box-shadow: var(--shadow);
+
+      position: relative;
+
+      overflow: hidden;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .stat-card::after {
+      content: "";
+
+      position: absolute;
+
+      width: 130px;
+      height: 130px;
+
+      border-radius: 50%;
+
+      right: -55px;
+      top: -55px;
+
+      background: var(--primary-light);
+    }
+
+    .stat-icon {
+      width: 46px;
+      height: 46px;
+
+      border-radius: 12px;
+
+      background: var(--primary-light);
+
+      color: var(--primary);
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 18px;
+
+      position: relative;
+
+      z-index: 2;
+    }
+
+    .stat-icon svg {
+      width: 30px;
+      height: 30px;
+
+      stroke: currentColor;
+
+      fill: none;
+
+      stroke-width: 2;
+
+      stroke-linecap: round;
+
+      stroke-linejoin: round;
+    }
+
+    .stat-title {
+      font-size: 14px;
+
+      font-weight: 700;
+
+      color: var(--muted);
+
+      text-transform: uppercase;
+
+      letter-spacing: .7px;
+
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: clamp(26px, 2.4vw, 36px);
+
+      font-weight: 800;
+
+      letter-spacing: -1.2px;
+
+      color: var(--text);
+
+      white-space: nowrap;
+
+      margin-bottom: 12px;
+    }
+
+    .stat-description {
+      font-size: 12px;
+
+      color: var(--muted);
+    }
+
+    .positive {
+      color: var(--green);
+
+      font-weight: 700;
+    }
+
+    .target-bar {
+      width: 100%;
+      height: 7px;
+
+      background: #dce6e7;
+
+      border-radius: 10px;
+
+      margin-top: 17px;
+
+      overflow: hidden;
+    }
+
+    .target-progress {
+      width: 90%;
+
+      height: 100%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          #397d80,
+          #55a5a4
+        );
+
+      transition: width 1.2s ease;
+    }
+
+
+    /* =====================================================
+       LIST PANELS
+    ===================================================== */
+
+    .panel-group {
+      grid-column: 2 / span 2;
+
+      display: grid;
+
+      grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.95fr);
+
+      gap: 18px;
+
+      align-items: start;
+    }
+
+    .panel {
+      background: #f8fbfb;
+
+      border: 1px solid var(--border);
+
+      border-radius: 18px;
+
+      box-shadow: 0 10px 24px rgba(35, 75, 79, 0.08);
+
+      padding: 18px 18px 14px;
+    }
+
+    .panel-header {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 14px;
+    }
+
+    .panel-header h3 {
+      font-size: 15px;
+
+      color: var(--text);
+    }
+
+    .panel-link {
+      font-size: 11px;
+
+      font-weight: 700;
+
+      letter-spacing: .4px;
+
+      text-transform: uppercase;
+
+      color: var(--primary);
+
+      text-decoration: none;
+    }
+
+    .order-list,
+    .payment-list {
+      display: grid;
+
+      gap: 10px;
+    }
+
+    .order-row,
+    .payment-row {
+      display: grid;
+
+      grid-template-columns: minmax(0, 1.45fr) auto auto;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 10px 0;
+
+      border-bottom: 1px solid #edf2f2;
+    }
+
+    .order-row:last-child,
+    .payment-row:last-child {
+      border-bottom: none;
+    }
+
+    .order-name,
+    .payment-name {
+      font-weight: 700;
+
+      font-size: 13px;
+
+      color: var(--text);
+    }
+
+    .order-meta,
+    .payment-meta {
+      font-size: 11px;
+
+      color: var(--muted);
+    }
+
+    .order-amount,
+    .payment-amount {
+      font-weight: 800;
+
+      font-size: 13px;
+
+      color: var(--primary-dark);
+    }
+
+    .status-badge {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-width: 62px;
+
+      padding: 6px 8px;
+
+      border-radius: 999px;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      letter-spacing: .4px;
+
+      text-transform: uppercase;
+    }
+
+    .status-paid {
+      background: rgba(41, 146, 91, 0.1);
+
+      color: var(--green);
+    }
+
+    .status-processing {
+      background: rgba(57, 125, 128, 0.12);
+
+      color: var(--primary);
+    }
+
+    .status-pending {
+      background: rgba(223, 91, 91, 0.1);
+
+      color: var(--red);
+    }
+
+    .payment-row {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .payment-total {
+      font-size: 12px;
+
+      color: var(--muted);
+
+      font-weight: 700;
+    }
+
+
+    /* =====================================================
+       RIGHT ACTIONS
+    ===================================================== */
+
+    .actions {
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 18px;
+
+      padding-top: 5px;
+    }
+
+    .action {
+      width: 62px;
+      height: 62px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--border);
+
+      background: white;
+
+      box-shadow:
+        0 6px 15px rgba(0,0,0,.10);
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      cursor: pointer;
+
+      color: var(--primary);
+
+      position: relative;
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        color .2s ease;
+    }
+
+    .action:hover {
+      transform: translateY(-4px);
+
+      background: var(--primary);
+
+      color: white;
+    }
+
+    .action svg {
+      width: 28px;
+      height: 28px;
+
+      fill: none;
+
+      stroke: currentColor;
+
+      stroke-width: 2;
+
+      stroke-linecap: round;
+
+      stroke-linejoin: round;
+    }
+
+    .notification-badge {
+      position: absolute;
+
+      top: -2px;
+      right: -2px;
+
+      width: 22px;
+      height: 22px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--red);
+
+      color: white;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      border: 2px solid white;
+    }
+
+    .action-label {
+      text-align: center;
+
+      font-size: 10px;
+
+      color: var(--muted);
+
+      line-height: 13px;
+    }
+
+
+    /* =====================================================
+       NOTIFICATION PANEL
+    ===================================================== */
+
+    .notification-panel {
+      position: absolute;
+
+      top: 25px;
+      right: 25px;
+
+      width: 260px;
+
+      background: white;
+
+      border-radius: 14px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.18);
+
+      border: 1px solid var(--border);
+
+      padding: 18px;
+
+      z-index: 20;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transform:
+        translateY(-10px)
+        scale(.97);
+
+      transition: .2s ease;
+    }
+
+    .notification-panel.active {
+      opacity: 1;
+
+      pointer-events: auto;
+
+      transform:
+        translateY(0)
+        scale(1);
+    }
+
+    .notification-panel h3 {
+      font-size: 15px;
+
+      margin-bottom: 10px;
+    }
+
+    .notification-item {
+      padding: 10px 0;
+
+      border-top: 1px solid #edf1f1;
+
+      font-size: 12px;
+
+      color: var(--muted);
+    }
+
+
+    /* =====================================================
+       RETAILER MODAL
+    ===================================================== */
+
+    .modal {
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(12,27,29,.55);
+
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+
+      z-index: 100;
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      transition: .2s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+
+      visibility: visible;
+    }
+
+    .modal-content {
+      width: min(420px, 100%);
+
+      background: white;
+
+      border-radius: 18px;
+
+      padding: 28px;
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.25);
+
+      transform: translateY(20px);
+
+      transition: .25s ease;
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+    }
+
+    .close-modal {
+      width: 35px;
+      height: 35px;
+
+      border: 0;
+
+      border-radius: 50%;
+
+      background: #edf3f3;
+
+      cursor: pointer;
+
+      font-size: 18px;
+
+      color: var(--primary-dark);
+    }
+
+    .modal-info {
+      display: grid;
+
+      gap: 10px;
+    }
+
+    .modal-info div {
+      padding: 13px;
+
+      background: #f4f8f8;
+
+      border-radius: 9px;
+
+      font-size: 13px;
+    }
+
+    .modal-info strong {
+      color: var(--primary-dark);
+    }
+
+
+    /* =====================================================
+       RESPONSIVE TABLET
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+      body {
+        padding: 25px 15px;
+      }
+
+      .dashboard {
+        grid-template-columns:
+          160px
+          minmax(220px, 1fr)
+          minmax(220px, 1fr)
+          70px;
+
+        gap: 12px;
+
+        padding: 20px;
+      }
+
+      .profile-image {
+        width: 105px;
+        height: 105px;
+      }
+
+      .stat-card {
+        padding: 20px 18px;
+      }
+
+      .stat-value {
+        font-size: 31px;
+      }
+
+      .action {
+        width: 52px;
+        height: 52px;
+      }
+    }
+
+
+    /* =====================================================
+       RESPONSIVE MOBILE
+    ===================================================== */
+
+    @media (max-width: 700px) {
+
+      body {
+        display: block;
+
+        padding: 15px;
+
+        background:
+          linear-gradient(
+            135deg,
+            #edf4f4,
+            #d9e5e6
+          );
+      }
+
+      .dashboard {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        padding: 15px;
+
+        gap: 15px;
+
+        border-radius: 18px;
+      }
+
+
+      /* Profile */
+
+      .profile {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns: 110px 1fr;
+
+        gap: 15px;
+
+        align-items: center;
+
+        padding: 10px;
+      }
+
+      .profile-image {
+        width: 105px;
+        height: 105px;
+
+        margin: 0;
+      }
+
+      .profile-details {
+        gap: 6px;
+      }
+
+      .profile-row {
+        padding: 7px 9px;
+
+        text-align: left;
+      }
+
+      .profile-row strong {
+        display: inline;
+
+        margin-right: 4px;
+      }
+
+
+      /* Cards */
+
+      .stat-card {
+        min-height: 210px;
+
+        width: 100%;
+      }
+
+      .stat-value {
+        font-size: clamp(30px, 10vw, 42px);
+      }
+
+
+      /* Actions */
+
+      .actions {
+        flex-direction: row;
+
+        justify-content: center;
+
+        padding: 5px;
+
+        gap: 25px;
+      }
+
+      .action {
+        width: 56px;
+        height: 56px;
+      }
+
+      .action-label {
+        display: none;
+      }
+
+      .notification-panel {
+        top: 15px;
+
+        right: 15px;
+      }
+    }
+
+
+    /* =====================================================
+       VERY SMALL DEVICES
+    ===================================================== */
+
+    @media (max-width: 430px) {
+
+      body {
+        padding: 8px;
+      }
+
+      .dashboard {
+        padding: 10px;
+
+        gap: 10px;
+      }
+
+      .profile {
+        grid-template-columns: 1fr;
+
+        justify-items: center;
+
+        text-align: center;
+      }
+
+      .profile-details {
+        width: 100%;
+      }
+
+      .profile-row {
+        text-align: center;
+      }
+
+      .stat-card {
+        min-height: 190px;
+
+        padding: 20px;
+      }
+
+      .stat-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .stat-icon svg {
+        width: 25px;
+        height: 25px;
+      }
+
+      .actions {
+        gap: 15px;
+      }
+    }
+
+
+    /* =====================================================
+       ANIMATION
+    ===================================================== */
+
+    @keyframes dashboardIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dashboard {
+      animation: dashboardIn .6s ease;
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       DASHBOARD
+  ===================================================== -->
+
+  <main class="dashboard">
+
+
+    <!-- ===================================================
+         PROFILE
+    ==================================================== -->
+
+    <section class="profile">
+
+      <div class="profile-image">
+
+        <div class="cloud"></div>
+
+        <div class="hill-one"></div>
+
+        <div class="hill-two"></div>
+
+      </div>
+
+
+      <div class="profile-details">
+
+        <div class="profile-row">
+          <strong>Shop</strong>
+          The Gourmet Grocer
+        </div>
+
+        <div class="profile-row">
+          <strong>Contact</strong>
+          Jane Doe
+        </div>
+
+        <div class="profile-row">
+          <strong>Phone</strong>
+          +1 (555) 123-4567
+        </div>
+
+        <div class="profile-row">
+          <strong>Location</strong>
+          New York, USA
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         TOTAL ORDER
+    ==================================================== -->
+
+    <section class="stat-card">
+
+      <div class="stat-icon">
+
+        <!-- Package icon -->
+        <svg viewBox="0 0 24 24">
+          <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+          <path d="m3.3 7 8.7 5 8.7-5"/>
+          <path d="M12 22V12"/>
+          <path d="m7.5 4.5 9 5"/>
+        </svg>
+
+      </div>
+
+
+      <div class="stat-title">
+        Total Order
+      </div>
+
+
+      <div
+        class="stat-value"
+        id="orderValue"
+      >
+        2,847
+      </div>
+
+
+      <div class="stat-description">
+
+        <span class="positive">
+          +12.5%
+        </span>
+
+        vs last month
+
+      </div>
+      <hr>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         TOTAL SALE
+    ==================================================== -->
+
+    <section class="stat-card">
+
+      <div class="stat-icon">
+
+        <!-- Dollar icon -->
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 6v12"/>
+          <path d="M15 9.5c-.5-1-1.5-1.5-3-1.5-1.7 0-3 1-3 2.2 0 3.2 6 1.4 6 4.5 0 1.3-1.3 2.3-3 2.3-1.5 0-2.7-.5-3.3-1.5"/>
+        </svg>
+
+      </div>
+
+
+      <div class="stat-title">
+        Total Sale
+      </div>
+
+
+      <div
+        class="stat-value"
+        id="saleValue"
+      >
+        $158,230.15
+      </div>
+
+
+      <div class="stat-description">
+
+        Target:
+        <strong>$175k</strong>
+
+        (<span id="percentage">90</span>%)
+
+      </div>
+
+
+      <div class="target-bar">
+
+        <div
+          class="target-progress"
+          id="progress"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         ACTIONS
+    ==================================================== -->
+
+    <section class="panel-group">
+
+      <div class="panel">
+
+        <div class="panel-header">
+          <h3>Recent Orders</h3>
+          <a href="#" class="panel-link">View all</a>
+        </div>
+
+        <div class="order-list">
+
+          <div class="order-row">
+            <div>
+              <div class="order-name">Fresh Harvest</div>
+              <div class="order-meta">#1072 • 2 mins ago</div>
+            </div>
+            <div class="order-amount">$842.00</div>
+            <span class="status-badge status-paid">Paid</span>
+          </div>
+
+          <div class="order-row">
+            <div>
+              <div class="order-name">Green Valley</div>
+              <div class="order-meta">#1068 • 18 mins ago</div>
+            </div>
+            <div class="order-amount">$386.70</div>
+            <span class="status-badge status-processing">In transit</span>
+          </div>
+
+          <div class="order-row">
+            <div>
+              <div class="order-name">City Basket</div>
+              <div class="order-meta">#1062 • 42 mins ago</div>
+            </div>
+            <div class="order-amount">$1,205.50</div>
+            <span class="status-badge status-pending">Pending</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="panel">
+
+        <div class="panel-header">
+          <h3>Payments</h3>
+          <a href="#" class="panel-link">This week</a>
+        </div>
+
+        <div class="payment-list">
+
+          <div class="payment-row">
+            <div>
+              <div class="payment-name">Bank Transfer</div>
+              <div class="payment-meta">Mon, 09 Apr</div>
+            </div>
+            <div class="payment-total">$4,200</div>
+            <span class="status-badge status-paid">Cleared</span>
+          </div>
+
+          <div class="payment-row">
+            <div>
+              <div class="payment-name">Card Payment</div>
+              <div class="payment-meta">Tue, 10 Apr</div>
+            </div>
+            <div class="payment-total">$1,870</div>
+            <span class="status-badge status-processing">Settled</span>
+          </div>
+
+          <div class="payment-row">
+            <div>
+              <div class="payment-name">Cash Settlement</div>
+              <div class="payment-meta">Wed, 11 Apr</div>
+            </div>
+            <div class="payment-total">$980</div>
+            <span class="status-badge status-pending">Due</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <aside class="actions">
+
+
+      <!-- Notification -->
+
+      <div
+        class="action"
+        id="notificationButton"
+        title="Notifications"
+      >
+
+        <!-- Bell -->
+        <svg viewBox="0 0 24 24">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+          <path d="M10 21h4"/>
+        </svg>
+
+        <span
+          class="notification-badge"
+          id="badge"
+        >
+          3
+        </span>
+
+      </div>
+
+
+      <!-- Retailer details -->
+
+      <div
+        class="action"
+        id="detailsButton"
+        title="Retailer details"
+      >
+
+        <!-- User icon -->
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M20 21a8 8 0 0 0-16 0"/>
+
+          <circle
+            cx="12"
+            cy="7"
+            r="4"
+          />
+
+        </svg>
+
+      </div>
+
+
+      <div class="action-label">
+        Retailer<br>
+        Details
+      </div>
+
+
+    </aside>
+
+
+    <!-- ===================================================
+         NOTIFICATION POPUP
+    ==================================================== -->
+
+    <div
+      class="notification-panel"
+      id="notificationPanel"
+    >
+
+      <h3>
+        Notifications
+      </h3>
+
+      <div class="notification-item">
+        📦 New order #2847 received
+      </div>
+
+      <div class="notification-item">
+        💰 Monthly sales target is at 90%
+      </div>
+
+      <div class="notification-item">
+        👤 Retailer profile updated
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       RETAILER DETAILS MODAL
+  ===================================================== -->
+
+  <div
+    class="modal"
+    id="detailsModal"
+  >
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h2>
+          Retailer Details
+        </h2>
+
+        <button
+          class="close-modal"
+          id="closeModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="modal-info">
+
+        <div>
+          <strong>Shop:</strong>
+          The Gourmet Grocer
+        </div>
+
+        <div>
+          <strong>Contact:</strong>
+          Jane Doe
+        </div>
+
+        <div>
+          <strong>Phone:</strong>
+          +1 (555) 123-4567
+        </div>
+
+        <div>
+          <strong>Location:</strong>
+          New York, USA
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script>
+
+    /*
+     * Dashboard data
+     */
+
+    const dashboardData = {
+      orders: 2847,
+      sales: 158230.15,
+      target: 175000,
+      notifications: 3
+    };
+
+
+    /*
+     * Elements
+     */
+
+    const orderValue =
+      document.getElementById("orderValue");
+
+    const saleValue =
+      document.getElementById("saleValue");
+
+    const percentage =
+      document.getElementById("percentage");
+
+    const progress =
+      document.getElementById("progress");
+
+    const badge =
+      document.getElementById("badge");
+
+    const notificationButton =
+      document.getElementById(
+        "notificationButton"
+      );
+
+    const notificationPanel =
+      document.getElementById(
+        "notificationPanel"
+      );
+
+    const detailsButton =
+      document.getElementById(
+        "detailsButton"
+      );
+
+    const detailsModal =
+      document.getElementById(
+        "detailsModal"
+      );
+
+    const closeModal =
+      document.getElementById(
+        "closeModal"
+      );
+
+
+    /*
+     * Currency formatter
+     */
+
+    function currency(value) {
+
+      return new Intl.NumberFormat(
+        "en-US",
+        {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2
+        }
+      ).format(value);
+
+    }
+
+
+    /*
+     * Calculate target
+     */
+
+    function updateTarget() {
+
+      const percent =
+        Math.round(
+          dashboardData.sales /
+          dashboardData.target *
+          100
+        );
+
+      percentage.textContent =
+        percent;
+
+      setTimeout(() => {
+
+        progress.style.width =
+          Math.min(percent, 100) + "%";
+
+      }, 300);
+
+    }
+
+
+    /*
+     * Number animation
+     */
+
+    function animateNumber(
+      element,
+      start,
+      end,
+      duration,
+      formatter
+    ) {
+
+      const startTime =
+        performance.now();
+
+
+      function animate(time) {
+
+        const elapsed =
+          time - startTime;
+
+        const progressValue =
+          Math.min(
+            elapsed / duration,
+            1
+          );
+
+        /*
+         * Ease-out effect
+         */
+
+        const eased =
+          1 -
+          Math.pow(
+            1 - progressValue,
+            3
+          );
+
+        const current =
+          start +
+          (end - start) *
+          eased;
+
+        element.textContent =
+          formatter(current);
+
+        if (progressValue < 1) {
+
+          requestAnimationFrame(
+            animate
+          );
+
+        }
+
+      }
+
+      requestAnimationFrame(
+        animate
+      );
+
+    }
+
+
+    /*
+     * Initialize dashboard
+     */
+
+    function initializeDashboard() {
+
+      animateNumber(
+        orderValue,
+        0,
+        dashboardData.orders,
+        1000,
+        value =>
+          Math.floor(value)
+            .toLocaleString()
+      );
+
+
+      animateNumber(
+        saleValue,
+        0,
+        dashboardData.sales,
+        1300,
+        currency
+      );
+
+
+      updateTarget();
+
+      badge.textContent =
+        dashboardData.notifications;
+
+    }
+
+
+    /*
+     * Notification button
+     */
+
+    notificationButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.stopPropagation();
+
+        notificationPanel
+          .classList
+          .toggle("active");
+
+      }
+    );
+
+
+    /*
+     * Close notification popup
+     * when clicking outside
+     */
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          !notificationPanel.contains(
+            event.target
+          ) &&
+          !notificationButton.contains(
+            event.target
+          )
+        ) {
+
+          notificationPanel
+            .classList
+            .remove("active");
+
+        }
+
+      }
+    );
+
+
+    /*
+     * Retailer details modal
+     */
+
+    detailsButton.addEventListener(
+      "click",
+      function() {
+
+        detailsModal
+          .classList
+          .add("active");
+
+      }
+    );
+
+
+    /*
+     * Close modal
+     */
+
+    closeModal.addEventListener(
+      "click",
+      function() {
+
+        detailsModal
+          .classList
+          .remove("active");
+
+      }
+    );
+
+
+    /*
+     * Close modal when clicking
+     * outside the content
+     */
+
+    detailsModal.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target ===
+          detailsModal
+        ) {
+
+          detailsModal
+            .classList
+            .remove("active");
+
+        }
+
+      }
+    );
+
+
+    /*
+     * Keyboard support
+     */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          detailsModal
+            .classList
+            .remove("active");
+
+          notificationPanel
+            .classList
+            .remove("active");
+
+        }
+
+      }
+    );
+
+
+    /*
+     * Start
+     */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeDashboard
+    );
+
+  </script>
+
+</body>
+</html>
